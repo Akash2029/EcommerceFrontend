@@ -1,0 +1,67 @@
+<div class="container mt-5">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> Id</th>
+      <td mat-cell *matCellDef="let element"> {{element.productId}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="Name of Product">
+      <th mat-header-cell *matHeaderCellDef> Name of Product</th>
+      <td mat-cell *matCellDef="let element"> {{element.productName}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Product description">
+      <th mat-header-cell *matHeaderCellDef> Product description </th>
+      <td mat-cell *matCellDef="let element"> {{element.productDescription}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Discounted Price">
+      <th mat-header-cell *matHeaderCellDef> Discounted Price</th>
+      <td mat-cell *matCellDef="let element"> {{element.productDiscountedPrice}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="Actual price">
+      <th mat-header-cell *matHeaderCellDef>Actual price</th>
+      <td mat-cell *matCellDef="let element"> {{element.productActualPrice}} </td>
+    </ng-container>
+
+    <!-- image button -->
+    <ng-container matColumnDef="Images">
+      <th mat-header-cell *matHeaderCellDef>Images</th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-icon-button color="primary" (click)="showImages(element)">
+          <mat-icon>image</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Edit button -->
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef>Edit</th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-icon-button color="primary">
+          <mat-icon>edit</mat-icon>
+        </button> 
+      </td>
+    </ng-container>
+
+    <!-- delete button -->
+    <ng-container matColumnDef="Delete">
+      <th mat-header-cell *matHeaderCellDef>Delete</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button (click)="deleteProductDetails(element.productId)" color="warn">
+        <mat-icon>delete</mat-icon>
+      </button> 
+    </td>
+      
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
