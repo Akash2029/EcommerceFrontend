@@ -18,10 +18,13 @@ export class AuthInterceptor implements HttpInterceptor{
       }
 
       const token = this.userAuth.getToken();
-      const authRequest = req.clone({
-        headers:req.headers.set('Authorization',`Bearer ${token}`)
-      });
-      req = authRequest;
+      if(token){
+        const authRequest = req.clone({
+          headers:req.headers.set('Authorization',`Bearer ${token}`)
+        });
+        req = authRequest;
+      }
+      
       console.log("inside interceptor token",token);
     //   this.addToken(req,token);
       console.log("inside interceptor headers",req.headers.get('Authorization'));
@@ -39,16 +42,5 @@ export class AuthInterceptor implements HttpInterceptor{
         )
       );
     }
-
-    // addToken(request:HttpRequest<any>,token:string | null){
-    //     console.log("add token is called");
-    //     return request.clone(
-    //         {
-    //             setHeaders:{
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         }
-    //     );
-    // }
     
 }

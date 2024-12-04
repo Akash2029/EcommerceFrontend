@@ -6,9 +6,11 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { ShowProductImagesDialogComponent } from '../show-product-images-dialog/show-product-images-dialog.component';
-import { ImageProcessingService } from '../image-processing.service';
+import { ImageProcessingService } from '../services/image-processing.service';
 import { map } from 'rxjs';
 import { Product } from '../models/product.model';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -24,11 +26,11 @@ export class ShowAllProductComponent implements OnInit{
   }
   constructor(private prodService:ProductService,
     private dialog:MatDialog,
-    private imageService: ImageProcessingService
-  ){
-  }
+    private imageService: ImageProcessingService,
+    private router:Router
+  ){}
   dataSource:any = [];
-  displayedColumns: string[] = ['position', 'Name of Product','Product description', 'Actual price', 'Discounted Price','Images','Edit','Delete'];
+  displayedColumns: string[] = ['position', 'Name of Product','description', 'Actual price', 'Discounted Price','Actions'];
   
   getAllProducts(){
     this.prodService.getProduct()
@@ -74,6 +76,11 @@ export class ShowAllProductComponent implements OnInit{
         image: val.productImages,
       },
     });
+  }
+
+  editProductDetails(val:number){
+    this.router.navigate(['/addNewProduct',{productId:val}]);
+    //resolvers make sure that backend operation is done and then html component is loaded
   }
 }
 

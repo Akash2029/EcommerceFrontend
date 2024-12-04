@@ -32,7 +32,8 @@
                 </mat-form-field>
                 <div align="end">
                   <button mat-stroked-button color="primary" style="margin-right: 3px;" color="primary">Clear</button>
-                  <button mat-stroked-button color="primary" type="submit" color="primary">Add Product</button>
+                  <button mat-stroked-button color="primary" type="submit" color="primary" *ngIf="!update">Add Product</button>
+                  <button mat-stroked-button color="primary" type="submit" color="primary" *ngIf="update">Update Product</button>
                 </div>
               </form>              
             </div>
@@ -56,7 +57,7 @@
                    <div class="mt-5">
                       <div class="row">
                         <mat-grid-list cols="4" rowHeight="1:1">
-                          <mat-grid-tile *ngFor="let file of product.productImage; let i = index">
+                          <mat-grid-tile *ngFor="let file of product.productImages; let i = index">
                             <div style="position: relative;">
                               <span class="btn-remove-image" (click)="removeImage(i)">x</span>
                               <img [src]="file.url" width="100px" height="100px">

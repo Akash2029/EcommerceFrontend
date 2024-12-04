@@ -10,29 +10,38 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CommonModule } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { DragDirective } from '../drag.directive';
+import {MatButtonModule} from '@angular/material/button';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-new-product',
   standalone: true,
-  imports: [MatFormFieldModule,MatInputModule,FormsModule,MatGridListModule,CommonModule ,DragDirective],
+  imports: [MatFormFieldModule,MatInputModule,FormsModule,MatGridListModule,CommonModule ,DragDirective,MatButtonModule],
   templateUrl: './add-new-product.component.html',
   styleUrl: './add-new-product.component.scss'
 })
 export class AddNewProductComponent implements OnInit{
+  update:boolean = false;
   ngOnInit(): void {
- 
+
+    this.product = this.activatedRoute.snapshot.data['product'];
+    if(this.product && this.product.productId){
+      this.update = true;
+    }
   }
 
   constructor(private productService:ProductService,
-    private domSanitizer:DomSanitizer
+    private domSanitizer:DomSanitizer,
+    private activatedRoute:ActivatedRoute
   ){}
 
   product:Product={
+    productId:0,
     productName:"",
     productDescription:"",
     productDiscountedPrice:0,
     productActualPrice:0,
-    productImage: []
+    productImages: []
   }
 
   // requestHeader = new HttpHeaders({"Content-Type":"multipart/form-data"});
@@ -44,7 +53,7 @@ export class AddNewProductComponent implements OnInit{
     .subscribe((res) =>{
       console.log("api response",res);
       product.reset();
-      this.product.productImage = [];
+      this.product.productImages = [];
     },
   (error) =>{
     console.log(error);
@@ -55,8 +64,8 @@ export class AddNewProductComponent implements OnInit{
   createFileUploadBody(product:Product):FormData{
     const formData = new FormData();
     formData.append("product",new Blob([JSON.stringify(product)],{type:'application/json'}))
-    for(var i=0;i<product.productImage.length;i++){
-      formData.append('imageFile',product.productImage[i].file,product.productImage[i].file.name);
+    for(var i=0;i<product.productImages.length;i++){
+      formData.append('imageFile',product.productImages[i].file,product.productImages[i].file.name);
     }
     formData.forEach(res => {
       console.log("akash checking formdata",res);
@@ -75,16 +84,16 @@ export class AddNewProductComponent implements OnInit{
           window.URL.createObjectURL(file)                          
         )
       }
-      this.product.productImage.push(fileHandle);
-      console.log("checking upload image",this.product.productImage);
+      this.product.productImages.push(fileHandle);
+      console.log("checking upload image",this.product.productImages);
     }
   }
 
   removeImage(index:number){
-    this.product.productImage.splice(index,1);
+    this.product.productImages.splice(index,1);
   }
 
   fileDropped(fileHandle:any){
-    this.product.productImage.push(fileHandle);
+    this.product.productImages.push(fileHandle);
   }
 }

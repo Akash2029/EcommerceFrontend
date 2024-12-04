@@ -15,7 +15,7 @@
   </button>
 </mat-toolbar>
 <mat-toolbar class="bottom-bar" *ngIf="isLoggedIn()">
-  <button mat-raised-button routerLink="/">Home</button>
-  <button mat-raised-button routerLink="/addNewProduct" *ngIf="isAdmin()" >Add New Product</button>
-  <button mat-raised-button routerLink="/allProducts"  *ngIf="isAdmin()">Show All Products</button>
+  <button mat-raised-button routerLink="/" class="ml-1">Home</button>
+  <button mat-raised-button routerLink="/addNewProduct" *ngIf="isAdmin()" class="ml-1">Add New Product</button>
+  <button mat-raised-button routerLink="/allProducts"  *ngIf="isAdmin()" class="ml-1">Show All Products</button>
 </mat-toolbar>

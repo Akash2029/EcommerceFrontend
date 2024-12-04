@@ -24,4 +24,8 @@ export class ProductService {
   deleteProduct(productId:number){
     return this.httpClient.delete(this.userService.pathOfApi + "/product/delete/"+productId,{responseType : 'text'});
   }
+
+  getProductById(productId:any){
+    return this.httpClient.get<Product>(this.userService.pathOfApi + "/product/getById/" + productId);
+  }
 }
